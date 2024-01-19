@@ -20,7 +20,7 @@ We will use for marking the lab exercise Ubuntu 22.04, so you should use it too.
 You'll need to install a few Debian packages with the following commands:
 ```
 sudo apt-get update && sudo apt-get install -y build-essential gdb valgrind \
-    manpages-dev
+    manpages-dev openjdk-21-jdk openjdk-21-jre
 ```
 
 If you are browsing the slides online, simply click on the snippet name, which
