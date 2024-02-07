@@ -28,7 +28,8 @@ int main(int argc, char** argv) {
                 target_rank);
 
         /* Send the message */
-        MPI_Send(&payload, 1, MPI_INT, target_rank, 0, MPI_COMM_WORLD); }
+        MPI_Send(&payload, 1, MPI_INT, target_rank, 0, MPI_COMM_WORLD);
+    }
 
     while(1) {
         int payload;
