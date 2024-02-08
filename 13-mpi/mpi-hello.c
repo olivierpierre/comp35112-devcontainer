@@ -24,8 +24,8 @@ int main(int argc, char** argv) {
     int nlen;
     MPI_Get_processor_name(machine_name, &nlen);
 
-    printf("Hello world from processor %s, rank %d out of %d processors\n",
-           machine_name, my_rank, world_size);
+    printf("Hello world from process of rank %d, out of %d processes on machine"
+            " %s\n", my_rank, world_size, machine_name);
 
     /* Exit */
     MPI_Finalize();
