@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 
         /* increment payload */
         payload++;
-        int target_rank = 0;
+        int target_rank = my_rank;
 
         /* Choose the next process to send a message to */
         while(target_rank == my_rank)
