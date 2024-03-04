@@ -79,11 +79,11 @@ void foo_read(void) {
     
     rcu_read_lock();
     fp = rcu_dereference(gbl_foo);
-    rcu_read_unlock();
-
+    
     a = fp->a;
     b = fp->b;
     c = fp->c;
+    rcu_read_unlock();
 
     // Sanity check: readers must always have a consistent view, because the
     // writers always set a and b to the same value, check that they are equal.
