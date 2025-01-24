@@ -10,7 +10,7 @@ class MyRunnable implements Runnable {
     }
 }
 
-class Demo {
+class Main {
     public static void main(String[] args) {
         int NOWORKERS = 5;
         Thread[] threads = new Thread[NOWORKERS];
