@@ -4,6 +4,14 @@
 #include <unistd.h>
 #include <string.h>
 
+// Buggy implementation of the bounded buffer, omitting locks. This program
+// initialises the buffer with 5000 slots and creates two threads that insert
+// 2500 element each, with each element inserted being 0, 1, 2, ..., 2499. Once
+// the threads are done the main thread extracts and prints every element from
+// the bounded buffer. That extract operation shows that 1) some elements are
+// missing and 2) due to that the main thread blocks as it fails to extract
+// the expected 5000 elements.
+
 typedef struct {
     int *buffer;            // the buffer
     int max_elements;       // size of the buffer
