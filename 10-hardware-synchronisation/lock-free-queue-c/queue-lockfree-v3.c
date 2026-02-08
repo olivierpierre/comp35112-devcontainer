@@ -2,7 +2,7 @@
 // hacky solution: dequeued nodes are placed in a pool to be freed later when
 // the client code determines it is safe to do so (e.g. when the client code has
 // some form of guarantee that there is no dequeue operation ongoing). This is
-// not idea because if such situation does not happen often, the memory
+// not ideal because if such situation does not happen often, the memory
 // consumption of the queue will grow. We try to alleviate that problem by
 // reusing nodes from the free pools during enqueue operations, however it leads
 // to a peculiar issue.
