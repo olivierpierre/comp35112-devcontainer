@@ -1,0 +1,15 @@
+..module-common.o.cmd
+.Module.symvers.cmd
+.module-common.o
+.modules.order.cmd
+.my-rcu-module.ko.cmd
+.my-rcu-module.mod.cmd
+.my-rcu-module.mod.o.cmd
+.my-rcu-module.o.cmd
+Module.symvers
+modules.order
+my-rcu-module.ko
+my-rcu-module.mod
+my-rcu-module.mod.c
+my-rcu-module.mod.o
+my-rcu-module.o

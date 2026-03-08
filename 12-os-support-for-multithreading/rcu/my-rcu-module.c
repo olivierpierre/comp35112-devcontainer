@@ -24,7 +24,11 @@
 
 MODULE_LICENSE("GPL");
 
-// Number of reading threads
+// prototypes
+void foo_write(int new_value_for_a_and_b);
+void foo_read(void);
+
+// Number of threads (we'll have 1 writer and NUM_THREADS-1 readers)
 #define NUM_THREADS 64
 // for sanity checks: c member of the struct should always have the same value
 #define C_VALUE     42
@@ -57,13 +61,13 @@ void foo_write(int new_value_for_a_and_b) {
 
     // get a ref to the protected global data:
     old_fp = rcu_dereference_protected(gbl_foo, lockdep_is_held(&foo_mutex));
-    *new_fp = *old_fp; // copy data
+    *new_fp = *old_fp; // read + copy data
 
     // update data in the copy:
     new_fp->a = new_value_for_a_and_b;
     new_fp->b = new_value_for_a_and_b;
     
-    // atmoic ref update:
+    // atomic ref update:
     rcu_assign_pointer(gbl_foo, new_fp);
 
     spin_unlock(&foo_mutex);
@@ -135,7 +139,7 @@ static int __init my_rcu_init(void) {
     gbl_foo->c = 42;
 
     // Create reader threads
-    for (i = 0; i < NUM_THREADS/2; ++i) {
+    for (i = 0; i < NUM_THREADS-1; ++i) {
         read_threads[i] = kthread_run(reader_thread, NULL, "reader_thread_%d", i);
         if (IS_ERR(read_threads[i])) {
             pr_err("Failed to create reader thread %d\n", i);
@@ -158,12 +162,14 @@ static void __exit my_rcu_exit(void) {
     int i;
 
     // Stop reader threads
-    for (i = 0; i < NUM_THREADS/2; ++i)
+    for (i = 0; i < NUM_THREADS-1; ++i)
         if (read_threads[i])
             kthread_stop(read_threads[i]);
 
     if(write_thread)
         kthread_stop(write_thread);
+
+    kfree(gbl_foo);
 
     pr_info("MyRCU Module Unloaded\n");
 
